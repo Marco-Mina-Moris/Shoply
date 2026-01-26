@@ -11,7 +11,7 @@ import 'package:toastification/toastification.dart';
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
 
-  // إضافة controllers للحقول
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();

@@ -19,7 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     cubit = HomeCubit.get(context);
-    // تحميل البيانات عند بداية الشاشة
     cubit.getCategories();
     cubit.getProducts();
   }
