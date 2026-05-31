@@ -1,15 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
 import 'package:shoply/core/common/widget/custom_form_text_fiel.dart';
 import 'package:shoply/core/dialogs/app_dialogs.dart';
 import 'package:shoply/core/dialogs/app_toasts.dart';
 import 'package:shoply/core/utils/validator_functions.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:shoply/feature/app_section/app_section.dart';
 import 'package:shoply/feature/auth/controller/login/login_cubit.dart';
 import 'package:shoply/feature/auth/controller/register/register_cubit.dart';
 import 'package:shoply/feature/auth/view/register_screen.dart';
-import 'package:toastification/toastification.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,8 +21,16 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController(text: 'marco.mina@gmail.com');
-  final passwordController = TextEditingController(text: 'Marco2003');
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginCubit, LoginState>(
@@ -30,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (state is LoginLoading) {
           AppDialogs.showLoadingDialog(context);
         }
+
         if (state is LoginError) {
           Navigator.pop(context);
           AppToast.showToast(
@@ -39,6 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
             type: ToastificationType.error,
           );
         }
+
         if (state is LoginSuccess) {
           Navigator.pop(context);
           AppToast.showToast(
@@ -55,7 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
+          centerTitle: true,
+          title: const Text(
             "Login",
             style: TextStyle(
               fontSize: 25,
@@ -63,7 +74,6 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Color(0xff1F1F1F),
             ),
           ),
-          centerTitle: true,
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -72,12 +82,15 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 30),
-                Text(
+                const SizedBox(height: 30),
+                const Text(
                   "Email",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 CustomTextFormField(
                   controller: emailController,
                   validator: Validator.validateEmail,
@@ -85,24 +98,31 @@ class _LoginScreenState extends State<LoginScreen> {
                   keyboardType: TextInputType.emailAddress,
                   action: TextInputAction.next,
                 ),
-                SizedBox(height: 30),
-                Text(
+                const SizedBox(height: 30),
+                const Text(
                   "Password",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 CustomTextFormField(
                   controller: passwordController,
                   validator: Validator.validatePassword,
                   hintText: "Enter your password",
                   isPassword: true,
                   keyboardType: TextInputType.emailAddress,
-                  action: TextInputAction.next,
+                  action: TextInputAction.done,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 MaterialButton(
                   minWidth: double.infinity,
                   height: 50,
+                  color: const Color(0xff212121),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
                       await context.read<LoginCubit>().login(
@@ -111,10 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                     }
                   },
-                  color: Color(0xff212121),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Text(
+                  child: const Text(
                     "Login",
                     style: TextStyle(
                       fontSize: 16,
@@ -135,30 +152,30 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Text.rich(
                   TextSpan(
                     text: "Don't have an account? ",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xff6E6A7C),
                     ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => BlocProvider(
-                              create: (_) => RegisterCubit(),
-                              child: RegisterScreen(),
-                            ),
-                          ),
-                        );
-                      },
                     children: [
                       TextSpan(
                         text: "Sign Up",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                           color: Color(0xff212121),
                           fontWeight: FontWeight.w500,
                         ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => BlocProvider(
+                                  create: (_) => RegisterCubit(),
+                                  child: RegisterScreen(),
+                                ),
+                              ),
+                            );
+                          },
                       ),
                     ],
                   ),

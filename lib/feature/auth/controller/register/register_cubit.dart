@@ -17,9 +17,9 @@ class RegisterCubit extends Cubit<RegisterState> {
     try {
       await AuthApi.register(
         RegisterRequest(
-          name: name,
-          email: email,
-          password: password,
+          name: name.trim(),
+          email: email.trim(),
+          password: password.trim(),
         ),
       );
       emit(RegisterSuccess());

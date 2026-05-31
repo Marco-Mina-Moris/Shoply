@@ -12,11 +12,20 @@ abstract class AuthApi {
     Uri url = Uri.https('api.escuelajs.co', '/api/v1/users/');
     var response = await http.post(
       url,
-      body: request.toJson(),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(request.toJson()),
     );
     var responseBody = response.body;
     var json = jsonDecode(responseBody);
-    return RegisterResponse.fromJson(json);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return RegisterResponse.fromJson(json);
+    } else {
+      dynamic errMsg = json['message'];
+      if (errMsg is List) {
+        errMsg = errMsg.join(', ');
+      }
+      throw Exception(errMsg ?? 'Failed to register');
+    }
   }
 
   static Future<LoginResponse> login(LoginRequest request) async {
@@ -24,11 +33,20 @@ abstract class AuthApi {
     Uri url = Uri.https('api.escuelajs.co', '/api/v1/auth/login');
     var response = await http.post(
       url,
-      body: request.toJson(),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(request.toJson()),
     );
     var responseBody = response.body;
     var json = jsonDecode(responseBody);
-    return LoginResponse.fromJson(json);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return LoginResponse.fromJson(json);
+    } else {
+      dynamic errMsg = json['message'];
+      if (errMsg is List) {
+        errMsg = errMsg.join(', ');
+      }
+      throw Exception(errMsg ?? 'Failed to login');
+    }
   }
 
   static Future<LoginResponse> refreshToken(String refreshToken) async {
