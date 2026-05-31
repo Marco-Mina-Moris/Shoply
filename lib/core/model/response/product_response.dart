@@ -9,13 +9,18 @@ class ProductResponse {
   int? id;
   @HiveField(1)
   String? title;
+  @HiveField(6)
   String? slug;
   @HiveField(2)
   int? price;
+  @HiveField(5)
   String? description;
   CategoryResponse? category;
+  @HiveField(4)
   List<String>? images;
+  @HiveField(7)
   String? creationAt;
+  @HiveField(8)
   String? updatedAt;
   @HiveField(3)
   int quantity = 1;
@@ -42,7 +47,16 @@ class ProductResponse {
     category = json['category'] != null
         ? CategoryResponse.fromJson(json['category'])
         : null;
-    images = json['images'].cast<String>();
+    if (json['images'] != null) {
+      images = (json['images'] as List).map((e) {
+        return e.toString()
+            .replaceAll('[', '')
+            .replaceAll(']', '')
+            .replaceAll('"', '')
+            .replaceAll('\\', '')
+            .trim();
+      }).toList();
+    }
     creationAt = json['creationAt'];
     updatedAt = json['updatedAt'];
   }

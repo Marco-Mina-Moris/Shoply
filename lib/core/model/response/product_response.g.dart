@@ -19,7 +19,12 @@ class ProductResponseAdapter extends TypeAdapter<ProductResponse> {
     return ProductResponse(
       id: fields[0] as int?,
       title: fields[1] as String?,
+      slug: fields[6] as String?,
       price: fields[2] as int?,
+      description: fields[5] as String?,
+      images: (fields[4] as List?)?.cast<String>(),
+      creationAt: fields[7] as String?,
+      updatedAt: fields[8] as String?,
       quantity: fields[3] as int,
     );
   }
@@ -27,13 +32,23 @@ class ProductResponseAdapter extends TypeAdapter<ProductResponse> {
   @override
   void write(BinaryWriter writer, ProductResponse obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.title)
+      ..writeByte(6)
+      ..write(obj.slug)
       ..writeByte(2)
       ..write(obj.price)
+      ..writeByte(5)
+      ..write(obj.description)
+      ..writeByte(4)
+      ..write(obj.images)
+      ..writeByte(7)
+      ..write(obj.creationAt)
+      ..writeByte(8)
+      ..write(obj.updatedAt)
       ..writeByte(3)
       ..write(obj.quantity);
   }
