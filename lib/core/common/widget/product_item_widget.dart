@@ -10,44 +10,7 @@ class ProductItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<CartCubit, CartState>(
-          listener: (context, state) {
-            if (state is ProductAddedToCart) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: Colors.green,
-                  duration: const Duration(seconds: 2),
-                ),
-              );
-            }
-          },
-        ),
-        BlocListener<FavoriteCubit, FavoriteState>(
-          listener: (context, state) {
-            if (state is ProductAddedToFavorite) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: Colors.green,
-                  duration: const Duration(seconds: 2),
-                ),
-              );
-            } else if (state is ProductRemovedFromFavorite) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: Colors.orange,
-                  duration: const Duration(seconds: 2),
-                ),
-              );
-            }
-          },
-        ),
-      ],
-      child: Container(
+    return Container(
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
@@ -203,7 +166,6 @@ class ProductItemWidget extends StatelessWidget {
             ),
           ],
         ),
-      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+import 'package:shoply/core/model/response/product_response.dart';
 import 'package:shoply/core/common/widget/product_item_widget.dart';
 import 'package:shoply/core/model/response/category_response.dart';
 import 'package:shoply/feature/home/controller/home_cubit.dart';
@@ -43,8 +44,8 @@ class _ProductOfCategoryScreenState extends State<ProductOfCategoryScreen> {
         backgroundColor: const Color(0xffEBEBEB),
         title: Text(
           category?.name ?? 'Products',
-          style: GoogleFonts.roboto(
-            color: const Color(0xff212121),
+          style: const TextStyle(
+            color: Color(0xff212121),
             fontSize: 22,
             fontWeight: FontWeight.w600,
           ),
@@ -54,7 +55,28 @@ class _ProductOfCategoryScreenState extends State<ProductOfCategoryScreen> {
       body: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
           if (state is HomeProductOfCategoryLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Skeletonizer(
+              enabled: true,
+              child: GridView.builder(
+                padding: const EdgeInsets.all(16),
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  childAspectRatio: 0.7,
+                ),
+                itemCount: 4,
+                itemBuilder: (context, index) => ProductItemWidget(
+                  product: ProductResponse(
+                    id: index,
+                    title: 'Loading Product Name Placeholder',
+                    price: 1500,
+                    images: ['https://via.placeholder.com/150'],
+                  ),
+                ),
+              ),
+            );
           } else if (state is HomeProductOfCategoryError) {
             return Center(
               child: Column(

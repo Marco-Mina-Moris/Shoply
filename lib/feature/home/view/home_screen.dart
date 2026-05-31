@@ -1,6 +1,9 @@
 import 'package:shoply/feature/home/controller/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+import 'package:shoply/core/model/response/category_response.dart';
+import 'package:shoply/core/model/response/product_response.dart';
 import 'package:shoply/core/common/widget/product_item_widget.dart';
 import 'package:shoply/feature/home/widgets/tab_container_widget.dart';
 
@@ -19,7 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     cubit = HomeCubit.get(context);
-    // تحميل البيانات عند بداية الشاشة
     cubit.getCategories();
     cubit.getProducts();
   }
@@ -69,12 +71,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   
                   // عرض الفئات
                   if (state is HomeCategoryLoading) ...[
-                    const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(20),
-                        child: CircularProgressIndicator(),
+                    Skeletonizer(
+                      enabled: true,
+                      child: TabContainerWidget(
+                        categories: List.generate(
+                          5,
+                          (index) => CategoryResponse(
+                            id: index,
+                            name: 'Loading Category',
+                            image: 'https://via.placeholder.com/100',
+                          ),
+                        ),
                       ),
                     ),
+                    const SizedBox(height: 16),
                   ] else if (state is HomeCategoryError) ...[
                     const Center(
                       child: Padding(
@@ -116,8 +126,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   // عرض المنتجات
                   if (state is HomeProductLoading) ...[
-                    const Expanded(
-                      child: Center(child: CircularProgressIndicator()),
+                    Expanded(
+                      child: Skeletonizer(
+                        enabled: true,
+                        child: GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16,
+                            childAspectRatio: 0.7,
+                          ),
+                          itemCount: 4,
+                          itemBuilder: (context, index) => ProductItemWidget(
+                            product: ProductResponse(
+                              id: index,
+                              title: 'Loading Product Name Placeholder',
+                              price: 1500,
+                              images: ['https://via.placeholder.com/150'],
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ] else if (state is HomeProductError) ...[
                     const Expanded(
