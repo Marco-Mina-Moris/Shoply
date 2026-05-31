@@ -31,17 +31,21 @@ class CartCubit extends Cubit<CartState> {
       int existingIndex = cartProducts.indexWhere((item) => item.id == product.id);
       
       if (existingIndex != -1) {
+        // المنتج موجود بالفعل - زيادة الكمية فقط
         cartProducts[existingIndex].quantity++;
         await cartLocalData.updateToCart(cartProducts[existingIndex]);
+        calculateTotalPrice();
+        // إرسال حالة واحدة فقط
+        emit(ProductAddedToCart("Product quantity increased"));
       } else {
+        // منتج جديد - إضافته
         product.quantity = 1;
         await cartLocalData.addToCart(product);
         cartProducts.add(product);
+        calculateTotalPrice();
+        // إرسال حالة واحدة فقط
+        emit(ProductAddedToCart("Product added to cart"));
       }
-      
-      calculateTotalPrice();
-      emit(CartSuccess());
-      emit(ProductAddedToCart("The product has been added to the cart"));
     } catch (e) {
       emit(CartError(e.toString()));
     }

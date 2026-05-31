@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shoply/core/model/response/product_response.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
@@ -67,9 +66,9 @@ class ProductDetailsScreen extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Text(
+          child: const Text(
             'Add to Cart',
-            style: GoogleFonts.inter(
+            style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
               color: Colors.white,
