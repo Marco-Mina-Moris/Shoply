@@ -16,11 +16,14 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginLoading());
     try {
       var response =
-          await AuthApi.login(LoginRequest(email: email, password: password));
+          await AuthApi.login(LoginRequest(email: email.trim(), password: password.trim()));
+      if (response.accessToken == null || response.refreshToken == null) {
+        throw Exception('Failed to retrieve login tokens');
+      }
       await SharedPreferencesHelper.saveData(
-          key: 'accessToken', value: response.accessToken.toString());
+          key: 'accessToken', value: response.accessToken);
       await SharedPreferencesHelper.saveData(
-          key: 'refreshToken', value: response.refreshToken.toString());
+          key: 'refreshToken', value: response.refreshToken);
       emit(LoginSuccess());
     } catch (e) {
       emit(LoginError(e.toString()));

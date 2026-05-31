@@ -6,6 +6,7 @@ import 'package:shoply/feature/auth/view/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shoply/feature/auth/view/register_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:shoply/core/storage_helper/app_shared_preference_helper.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -111,7 +112,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       curve: Curves.easeIn,
                     );
                   } else {
-                    Navigator.push(
+                    SharedPreferencesHelper.saveData(key: 'onboarding_seen', value: true);
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => BlocProvider(
