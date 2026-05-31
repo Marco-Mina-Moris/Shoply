@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="100%" alt="shoply-banner" src="https://github.com/user-attachments/assets/2d1d6da9-ea56-493b-8e8c-d4a6eb1242ea" />
+  <img width="100%" alt="shoply (2)" src="https://github.com/user-attachments/assets/447f3c5b-7ec7-43a1-aff3-139171d10704" />
 </p>
 
 <h1 align="center"> Shoply — شوبلي </h1>
@@ -28,38 +28,38 @@ The app features a polished, feature-based **MVVM** architecture combined with *
 
 ## Features
 
-### 🌟 Onboarding & Welcoming Walkthrough
+### Onboarding & Welcoming Walkthrough
 - Beautiful onboarding sequence introducing the latest fashion trends
 - Smooth slide transitions using PageView and dynamic text overlays
 - Dot indicators using `SmoothPageIndicator` with expand effects
 - Micro-animations for text fade-in and slide-up effects (`Animate Do`)
 
-### 🔐 Secure Authentication & JWT Flow
+### Secure Authentication & JWT Flow
 - Complete register and login system using secure API integrations
 - Client-side input validation (Email, Password, Name) using custom validators
 - Toast notifications (`Toastification`) for success, error, and warning events
 - Token storage system managing Access Tokens and Refresh Tokens inside `SharedPreferences`
 
-### 🏠 Interactive Home Dashboard
+### Interactive Home Dashboard
 - Welcome banner introducing the shopping dashboard
 - Horizontal category tabs displaying categories dynamic listings
 - Skeletons loading states (`Skeletonizer`) showing mock categories and products while loading
 - Responsive products display grid featuring image placeholders and pricing details
 - Open category items to filter products dynamically per category
 
-### 🛍️ Cart & Checkout Management
+### Cart & Checkout Management
 - Add and remove items from cart with real-time UI updates
 - Adjust item quantities with tap buttons (plus/minus) that automatically recalculate the total price
 - Checkout redirection and list empty states with premium illustrations
 - Full offline cart preservation utilizing **Hive Database**
 
-### ❤️ Favorites List
+### Favorites List
 - Toggle product favorite status from lists and details screens
 - Clear All option displaying a prompt alert confirmation
 - Custom placeholder designs for empty favorite list screen
 - Permanent favorites storage utilizing **Hive Database**
 
-### 👤 Profile Dashboard
+### Profile Dashboard
 - Automated profile details fetching using JWT Authorization headers
 - View and update credentials (Name, Password) securely
 - Custom avatar profile picture with Camera and Gallery picking options (`ImagePicker`)
@@ -172,8 +172,8 @@ flutter run
 
 | Name | Role | Contact |
 |---|---|---|
-| **Marco Mina** | Flutter Developer | [GitHub](https://github.com/MARCO-Develper) \| [LinkedIn](https://www.linkedin.com/in/marco-mina-515369262) |
+| **Marco Mina** | Flutter Developer | [GitHub](https://github.com/Marco-Mina-Moris) \| [LinkedIn](https://www.linkedin.com/in/marco-mina-moris/) |
 
 ---
 
-<p align="center">Made with ❤️ by Marco Mina — 2026</p>
+<p align="center">Made with ❤️ by Marco Mina — 2025</p>
