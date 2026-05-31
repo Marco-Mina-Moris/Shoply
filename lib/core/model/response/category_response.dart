@@ -19,7 +19,15 @@ class CategoryResponse {
     id = json['id'];
     name = json['name'];
     slug = json['slug'];
-    image = json['image'];
+    String? imgUrl = json['image'];
+    if (imgUrl != null) {
+      image = imgUrl
+          .replaceAll('[', '')
+          .replaceAll(']', '')
+          .replaceAll('"', '')
+          .replaceAll('\\', '')
+          .trim();
+    }
     creationAt = json['creationAt'];
     updatedAt = json['updatedAt'];
   }
