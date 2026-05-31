@@ -11,7 +11,11 @@ abstract class ProfileApi {
         await http.get(url, headers: {'Authorization': 'Bearer $accessToken'});
     var responseBody = response.body;
     var json = jsonDecode(responseBody);
-    return UserResponse.fromJson(json);
+    if (response.statusCode == 200) {
+      return UserResponse.fromJson(json);
+    } else {
+      throw Exception(json['message'] ?? 'Failed to get profile data');
+    }
   }
 
   static Future<UserResponse> updateProfile(
@@ -22,6 +26,10 @@ abstract class ProfileApi {
         headers: {'Content-Type': 'application/json'}, body: request.toJson());
     var responseBody = response.body;
     var json = jsonDecode(responseBody);
-    return UserResponse.fromJson(json);
+    if (response.statusCode == 200) {
+      return UserResponse.fromJson(json);
+    } else {
+      throw Exception(json['message'] ?? 'Failed to update profile');
+    }
   }
 }
